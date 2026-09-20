@@ -46,8 +46,8 @@ ModelImporter:
       loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -533,18 +533,18 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Ch35_nonPBR (1)(Clone)
+    - name: Ch35_nonPBR (2)(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Ch35
-      parentName: Ch35_nonPBR (1)(Clone)
+      parentName: Ch35_nonPBR (2)(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:Hips
-      parentName: Ch35_nonPBR (1)(Clone)
+      parentName: Ch35_nonPBR (2)(Clone)
       position: {x: -0.0000082507995, y: 1.0124135, z: 0.0034367114}
       rotation: {x: -0.0000016063149, y: -0.0000024060655, z: 0.00007424918, w: 1}
       scale: {x: 1, y: 1, z: 1}
@@ -880,7 +880,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 43d87608c168e474caaebc1e937f65cc, type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 43d8d9f2f5c51f844aaa343e37e44b0e, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
