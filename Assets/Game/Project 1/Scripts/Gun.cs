@@ -16,13 +16,13 @@ public class Gun : MonoBehaviour
     [SerializeField] private Transform rightHandGrip;
     [Tooltip("Position of Left Hand Constraint target.")]
     [SerializeField] private Transform leftHandGrip;
+    [SerializeField] private Transform rightHandTarget;
+    [SerializeField] private Transform leftHandTarget;
 
     private float aniTime = 1;
 
     private Vector3 startingPosition; // Starting position of gun parent
     private Quaternion startingRotation; // Starting rotation of gun parent
-    private Vector3 rightGripStartingPosition; // Position of Right Grip target
-    private Vector3 leftGripStartingPosition; // Position of Left Grip target
 
     // Gets starting positions
     private void Start()
@@ -30,12 +30,20 @@ public class Gun : MonoBehaviour
         startingPosition = transform.localPosition;
         startingRotation = transform.localRotation;
 
-        rightGripStartingPosition = rightHandGrip.localPosition;
-        leftGripStartingPosition = leftHandGrip.localPosition;
     }
 
     private void Update()
     {
+        rightHandGrip.SetPositionAndRotation(
+            rightHandTarget.position,
+            rightHandTarget.rotation
+            );
+
+        leftHandGrip.SetPositionAndRotation(
+            leftHandTarget.position,
+            leftHandTarget.rotation
+        );
+
         aniTime += Time.deltaTime * aniSpeed;
 
         // Amount the gun is offset from recoil
@@ -56,11 +64,6 @@ public class Gun : MonoBehaviour
                 startingRotation * recoilRotationOffset,
                 Time.deltaTime * 10f * aniSpeed);
 
-        rightHandGrip.localPosition =
-            rightGripStartingPosition + recoilOffset;
-
-        leftHandGrip.localPosition =
-            leftGripStartingPosition + recoilOffset;
 
         // Gets mouse input to intiate recoil
         if (Mouse.current.leftButton.wasPressedThisFrame)

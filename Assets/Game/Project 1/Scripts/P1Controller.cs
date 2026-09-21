@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class P1Controller : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class P1Controller : MonoBehaviour
     [SerializeField] private float topLookLimit = -80f;
     [Tooltip("How far the player can move the camera down in degrees.")]
     [SerializeField] private float bottomLookLimit = 80f;
+    [SerializeField] private Transform rightHandAimPivot;
+    [SerializeField] private RigBuilder rigBuilder;
 
 
     [Header("Input")]
@@ -62,12 +65,13 @@ public class P1Controller : MonoBehaviour
 
     private void Update()
     {
-        // Read Vector2 values from inputs
         movementInput = controls.Player.Move.ReadValue<Vector2>();
         lookInput = controls.Player.Look.ReadValue<Vector2>();
 
         HandleRotation();
         HandleMovement();
+
+        rigBuilder.SyncLayers();
     }
 
     private void HandleMovement()
@@ -104,6 +108,9 @@ public class P1Controller : MonoBehaviour
         verticalRotation = Mathf.Clamp(verticalRotation, topLookLimit, bottomLookLimit);
 
         cameraPivot.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
+
+        rightHandAimPivot.localRotation =
+            Quaternion.Euler(verticalRotation, 0f, 0f);
 
         // Horizontal Rotation (looking left and right)
         float horizontalRotation = lookInput.x * lookSensitivity * Time.deltaTime;
