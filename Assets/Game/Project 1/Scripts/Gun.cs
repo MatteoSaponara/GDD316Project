@@ -8,7 +8,9 @@ public class Gun : MonoBehaviour
     [Tooltip("Speed of recoil animation")]
     [SerializeField] private float aniSpeed; // Speed of animation
     [Tooltip("Recoil multiplier.")]
-    [SerializeField] private float recoilAmount = 0.1f;
+    [SerializeField] private float recoilAmount = 0.025f;
+    [Tooltip("Upward rotation of recoil.")]
+    [SerializeField] private float recoilRotation = 10f;
 
     [Tooltip("Position of Right Hand Constraint target.")]
     [SerializeField] private Transform rightHandGrip;
@@ -18,6 +20,7 @@ public class Gun : MonoBehaviour
     private float aniTime = 1;
 
     private Vector3 startingPosition; // Starting position of gun parent
+    private Quaternion startingRotation; // Starting rotation of gun parent
     private Vector3 rightGripStartingPosition; // Position of Right Grip target
     private Vector3 leftGripStartingPosition; // Position of Left Grip target
 
@@ -25,6 +28,7 @@ public class Gun : MonoBehaviour
     private void Start()
     {
         startingPosition = transform.localPosition;
+        startingRotation = transform.localRotation;
 
         rightGripStartingPosition = rightHandGrip.localPosition;
         leftGripStartingPosition = leftHandGrip.localPosition;
@@ -37,11 +41,19 @@ public class Gun : MonoBehaviour
         // Amount the gun is offset from recoil
         Vector3 recoilOffset =
             new Vector3(curve.Evaluate(aniTime) * recoilAmount, 0, 0);
+        Quaternion recoilRotationOffset =
+            Quaternion.Euler(0, 0, curve.Evaluate(aniTime) * recoilRotation);
 
         transform.localPosition =
             Vector3.Lerp(
                 transform.localPosition,
                 startingPosition + recoilOffset,
+                Time.deltaTime * 10f * aniSpeed);
+
+        transform.localRotation = 
+            Quaternion.Lerp(
+                transform.localRotation,
+                startingRotation * recoilRotationOffset,
                 Time.deltaTime * 10f * aniSpeed);
 
         rightHandGrip.localPosition =
