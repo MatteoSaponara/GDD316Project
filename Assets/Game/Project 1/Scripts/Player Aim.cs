@@ -8,6 +8,10 @@ public class PlayerAim : MonoBehaviour
 
     private void Update()
     {
+        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+        Debug.DrawRay(ray.origin, ray.direction * aimRange, Color.red);
+
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             Aim();
@@ -20,7 +24,19 @@ public class PlayerAim : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, aimRange))
         {
-            Debug.Log("Hit: " + hit.collider.name);
+            Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
+
+            AimTarget target = hit.collider.GetComponent<AimTarget>();
+
+            if (target != null)
+            {
+                Debug.Log("Target hit should teleport");
+                target.Hit();
+            }
+        }
+        else
+        {
+            Debug.Log("Raycast hit nothing.");
         }
     }
 }
